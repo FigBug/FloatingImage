@@ -44,7 +44,7 @@ public:
     //==============================================================================
 
 private:
-	std::unique_ptr<MainComponent> mainWindow;
+    std::unique_ptr<MainComponent> mainWindow;
 };
 
 //==============================================================================
