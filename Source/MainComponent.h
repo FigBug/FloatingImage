@@ -3,7 +3,7 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class MainComponent  : public juce::Component
+class MainComponent : public juce::Component, public juce::FileDragAndDropTarget
 {
 public:
     //==============================================================================
@@ -22,6 +22,10 @@ public:
     void mouseUp (const juce::MouseEvent& e) override;
     void mouseWheelMove (const juce::MouseEvent&, const juce::MouseWheelDetails&) override;
 
+	bool isInterestedInFileDrag (const juce::StringArray& files) override;
+	void fileDragEnter (const juce::StringArray& files, int x, int y) override;
+	void fileDragExit (const juce::StringArray& files) override;
+	void filesDropped (const juce::StringArray& files, int x, int y) override;
 
 private:
     //==============================================================================
@@ -32,6 +36,7 @@ private:
     juce::Image image;
     float alpha = 0.5f;
     float scale = 1.0f;
+	bool dragOver = false;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

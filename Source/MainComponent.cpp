@@ -38,6 +38,12 @@ void MainComponent::paint (juce::Graphics& g)
 
     g.setOpacity (alpha);
     g.drawImage (image, getLocalBounds().toFloat());
+
+	if (dragOver)
+	{
+		g.setColour (juce::Colours::red.withAlpha (0.5f));
+		g.fillAll();
+	}
 }
 
 void MainComponent::resized()
@@ -131,9 +137,9 @@ juce::PropertiesFile& MainComponent::getSettings()
        #if JUCE_MAC
         auto dir = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile ("Application Support/RabienSoftware/FloatingImage");
        #elif JUCE_LINUX
-        auto dir = juce::File ("~/.config/RabienSoftware/" + getName());
+        auto dir = juce::File ("~/.config/RabienSoftware/FloatingImage");
        #else
-        auto dir = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile ("RabienSoftwareFloatingImage));
+        auto dir = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile ("RabienSoftware/FloatingImage"));
        #endif
 
         dir.createDirectory();
@@ -142,4 +148,47 @@ juce::PropertiesFile& MainComponent::getSettings()
         properties = std::make_unique<juce::PropertiesFile> (dir.getChildFile ("settings.xml"), options);
     }
     return *properties;
+}
+
+bool MainComponent::isInterestedInFileDrag (const juce::StringArray& files)
+{
+	if (files.size() == 1)
+	{
+		for (auto f : files)
+			if (! juce::File (f).hasFileExtension (".png"))
+				return false;
+
+		return true;
+	}
+	return false;
+}
+
+void MainComponent::fileDragEnter (const juce::StringArray&, int, int)
+{
+	dragOver = true;
+	repaint();
+}
+
+void MainComponent::fileDragExit (const juce::StringArray&)
+{
+	dragOver = false;
+	repaint();
+}
+
+void MainComponent::filesDropped (const juce::StringArray& files, int, int)
+{
+	if (auto f = juce::File (files[0]); f.existsAsFile())
+	{
+		if (auto i = juce::ImageFileFormat::loadFrom (f); ! i.isNull())
+		{
+			image = i;
+			repaint();
+			setSize (image.getWidth() / scale, image.getHeight() / scale);
+
+			getSettings().setValue ("file", f.getFullPathName());
+		}
+	}
+
+	dragOver = false;
+	repaint();
 }
