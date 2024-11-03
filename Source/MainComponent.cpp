@@ -10,8 +10,8 @@ MainComponent::MainComponent()
     addToDesktop (juce::ComponentPeer::windowAppearsOnTaskbar);
 
     auto& props = getSettings();
-    alpha = props.getDoubleValue ("alpha", alpha);
-    scale = props.getDoubleValue ("scale", scale);
+    alpha = float (props.getDoubleValue ("alpha", alpha));
+    scale = float (props.getDoubleValue ("scale", scale));
 
     if (auto f = juce::File (props.getValue ("file")); f.existsAsFile())
         if (auto i = juce::ImageFileFormat::loadFrom (f); ! i.isNull())
@@ -21,7 +21,7 @@ MainComponent::MainComponent()
         setBounds (juce::Rectangle<int>::fromString (pos));
 
     if (image.isValid())
-        setSize (image.getWidth() / scale, image.getHeight() / scale);
+        setSize (int (image.getWidth() / scale), int (image.getHeight() / scale));
 }
 
 MainComponent::~MainComponent()
@@ -84,7 +84,7 @@ void MainComponent::mouseUp (const juce::MouseEvent& e)
                     {
                         image = i;
                         repaint();
-                        setSize (image.getWidth() / scale, image.getHeight() / scale);
+                        setSize (int (image.getWidth() / scale), int (image.getHeight() / scale));
 
                         getSettings().setValue ("file", f.getFullPathName());
                     }
@@ -97,7 +97,7 @@ void MainComponent::mouseUp (const juce::MouseEvent& e)
         {
             scale = s;
             if (image.isValid())
-                setSize (image.getWidth() / scale, image.getHeight() / scale);
+                setSize (int (image.getWidth() / scale), int (image.getHeight() / scale));
             getSettings().setValue ("scale", scale);
         };
 
@@ -139,7 +139,7 @@ bool MainComponent::keyPressed (const juce::KeyPress& key)
         {
             image = i;
             repaint();
-            setSize (image.getWidth() / scale, image.getHeight() / scale);
+            setSize (int (image.getWidth() / scale), int (image.getHeight() / scale));
             
             getSettings().setValue ("file", juce::String());
         }
@@ -202,7 +202,7 @@ void MainComponent::filesDropped (const juce::StringArray& files, int, int)
 		{
 			image = i;
 			repaint();
-			setSize (image.getWidth() / scale, image.getHeight() / scale);
+            setSize (int (image.getWidth() / scale), int (image.getHeight() / scale));
 
 			getSettings().setValue ("file", f.getFullPathName());
 		}
