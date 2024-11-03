@@ -16,14 +16,14 @@ set_property (GLOBAL PROPERTY DEBUG_CONFIGURATIONS "Debug")
 set (CMAKE_C_FLAGS_DEVELOPMENT ${CMAKE_C_FLAGS_RELEASE})
 set (CMAKE_CXX_FLAGS_DEVELOPMENT ${CMAKE_CXX_FLAGS_RELEASE})
 
-project ("FloatingWindow" VERSION ${VERSION} LANGUAGES CXX C HOMEPAGE_URL "https://figbug.com/")
+project ("FloatingImage" VERSION ${VERSION} LANGUAGES CXX C HOMEPAGE_URL "https://figbug.com/")
 
 include (CMakeDependentOption)
 
-set_property (DIRECTORY APPEND PROPERTY LABELS "FloatingWindow")
+set_property (DIRECTORY APPEND PROPERTY LABELS "FloatingImage")
 
 set_property (DIRECTORY APPEND PROPERTY LABELS Figbug)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "FloatingWindow")
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "FloatingImage")
 
 set (CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
 
@@ -82,14 +82,14 @@ set_property (DIRECTORY APPEND PROPERTY LABELS Assets)
 
 file (GLOB_RECURSE binary_files CONFIGURE_DEPENDS "./Assets/*")
 
-juce_add_binary_data ("FloatingWindow_Assets" SOURCES ${binary_files})
+juce_add_binary_data ("FloatingImage_Assets" SOURCES ${binary_files})
 
-set_target_properties("FloatingWindow_Assets" PROPERTIES UNITY_BUILD ON UNITY_BUILD_MODE BATCH UNITY_BUILD_BATCH_SIZE 10)
+set_target_properties("FloatingImage_Assets" PROPERTIES UNITY_BUILD ON UNITY_BUILD_MODE BATCH UNITY_BUILD_BATCH_SIZE 10)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-juce_add_gui_app ("FloatingWindow"
-				  PRODUCT_NAME "FloatingWindow"
+juce_add_gui_app ("FloatingImage"
+				  PRODUCT_NAME "FloatingImage"
 				  VERSION ${VERSION}
 				  COMPANY_NAME FigBug
 				  ICON_BIG ${CMAKE_CURRENT_SOURCE_DIR}/Assets/icon.png
@@ -101,16 +101,16 @@ file (GLOB_RECURSE source_files CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.h)
 
-target_sources ("FloatingWindow" PRIVATE ${source_files})
+target_sources ("FloatingImage" PRIVATE ${source_files})
 
 file (GLOB_RECURSE asset_files CONFIGURE_DEPENDS
 	${CMAKE_CURRENT_SOURCE_DIR}/Assets/*)
 
-target_sources ("FloatingWindow" PRIVATE ${asset_files})
+target_sources ("FloatingImage" PRIVATE ${asset_files})
 source_group (TREE ${CMAKE_CURRENT_SOURCE_DIR}/Assets PREFIX Assets FILES ${asset_files})
 
-target_link_libraries ("FloatingWindow" PRIVATE
-						"FloatingWindow_Assets"
+target_link_libraries ("FloatingImage" PRIVATE
+						"FloatingImage_Assets"
 
 						gin
 						gin_gui
@@ -125,13 +125,13 @@ target_link_libraries ("FloatingWindow" PRIVATE
     					juce::juce_recommended_config_flags
 					)
 
-target_include_directories ("FloatingWindow" PRIVATE modules/fmt/include)
-target_include_directories ("FloatingWindow" PRIVATE modules/ASIO/common)
-target_include_directories ("FloatingWindow" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Source/Definitions)
+target_include_directories ("FloatingImage" PRIVATE modules/fmt/include)
+target_include_directories ("FloatingImage" PRIVATE modules/ASIO/common)
+target_include_directories ("FloatingImage" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Source/Definitions)
 
-juce_generate_juce_header ("FloatingWindow")
+juce_generate_juce_header ("FloatingImage")
 
-target_compile_definitions ("FloatingWindow" PRIVATE
+target_compile_definitions ("FloatingImage" PRIVATE
 								JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1
 								JUCE_COREGRAPHICS_DRAW_ASYNC=1
 								JUCE_MODAL_LOOPS_PERMITTED=0
@@ -183,7 +183,7 @@ if (WIN32)
 endif()
 
 if(UNIX AND NOT APPLE)
-	target_link_libraries ("FloatingWindow" PRIVATE curl)
+	target_link_libraries ("FloatingImage" PRIVATE curl)
 endif()
 
 
@@ -193,4 +193,4 @@ else()
 	set (dest "Applications")
 endif()
 
-install (TARGETS "FloatingWindow" DESTINATION "${dest}")
+install (TARGETS "FloatingImage" DESTINATION "${dest}")
