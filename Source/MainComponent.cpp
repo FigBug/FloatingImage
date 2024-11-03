@@ -158,7 +158,7 @@ juce::PropertiesFile& MainComponent::getSettings()
        #elif JUCE_LINUX
         auto dir = juce::File ("~/.config/RabienSoftware/FloatingImage");
        #else
-        auto dir = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile ("RabienSoftware/FloatingImage"));
+        auto dir = juce::File::getSpecialLocation (juce::File::userApplicationDataDirectory).getChildFile ("RabienSoftware/FloatingImage");
        #endif
 
         dir.createDirectory();
