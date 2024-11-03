@@ -49,11 +49,11 @@ if [ "$(uname)" == "Darwin" ]; then
   cmake --preset xcode
   cmake --build --preset xcode --config Release
 
-  cp -R "$ROOT/Builds/xcode/FloatingWindow_artefacts/Release/FloatingWindow.app" "$ROOT/ci/bin"
+  cp -R "$ROOT/Builds/xcode/FloatingImage_artefacts/Release/FloatingImage.app" "$ROOT/ci/bin"
 
   cd "$ROOT/ci/bin"
   if [ -n "$APPLICATION" ]; then
-    codesign -s "$DEV_APP_ID" -v FloatingWindow.app --options=runtime --timestamp --force
+    codesign -s "$DEV_APP_ID" -v FloatingImage.app --options=runtime --timestamp --force
   else
     echo "Not signing"
   fi
@@ -62,11 +62,11 @@ if [ "$(uname)" == "Darwin" ]; then
   cd "$ROOT/ci/bin"
 
   if [[ -n "$APPLE_USER" ]]; then
-    zip -r FloatingWindow_Mac.zip FloatingWindow.app
-    xcrun notarytool submit --verbose --apple-id "$APPLE_USER" --password "$APPLE_PASS" --team-id "3FS7DJDG38" --wait --timeout 30m FloatingWindow_Mac.zip
+    zip -r FloatingImage_Mac.zip FloatingImage.app
+    xcrun notarytool submit --verbose --apple-id "$APPLE_USER" --password "$APPLE_PASS" --team-id "3FS7DJDG38" --wait --timeout 30m FloatingImage_Mac.zip
 
-    rm FloatingWindow_Mac.zip
-    xcrun stapler staple FloatingWindow.app
+    rm FloatingImage_Mac.zip
+    xcrun stapler staple FloatingImage.app
   else
     echo "Not notarizing"
   fi
@@ -77,7 +77,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   cmake --preset ninja-gcc
   cmake --build --preset ninja-gcc --config Release
 
-  cp -R "$ROOT/Builds/ninja-gcc/FloatingWindow_artefacts/Release/FloatingWindow" "$ROOT/ci/bin"
+  cp -R "$ROOT/Builds/ninja-gcc/FloatingImage_artefacts/Release/FloatingImage" "$ROOT/ci/bin"
 
   cd "$ROOT/ci/bin"
 
@@ -90,5 +90,5 @@ elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
 
   cd "$ROOT/ci/bin"
 
-  cp -R "$ROOT/Builds/vs/FloatingWindow_artefacts/Release/FloatingWindow.exe" "$ROOT/ci/bin"
+  cp -R "$ROOT/Builds/vs/FloatingImage_artefacts/Release/FloatingImage.exe" "$ROOT/ci/bin"
 fi
