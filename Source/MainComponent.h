@@ -21,6 +21,8 @@ public:
     void mouseDrag (const juce::MouseEvent& e) override;
     void mouseUp (const juce::MouseEvent& e) override;
     void mouseWheelMove (const juce::MouseEvent&, const juce::MouseWheelDetails&) override;
+    
+    bool keyPressed (const juce::KeyPress& key) override;
 
 	bool isInterestedInFileDrag (const juce::StringArray& files) override;
 	void fileDragEnter (const juce::StringArray& files, int x, int y) override;

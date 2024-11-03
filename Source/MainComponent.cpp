@@ -5,6 +5,7 @@ MainComponent::MainComponent()
 {
     setOpaque (false);
     setVisible (true);
+    setWantsKeyboardFocus (true);
     centreWithSize (640, 480);
     addToDesktop (juce::ComponentPeer::windowAppearsOnTaskbar);
 
@@ -128,6 +129,24 @@ void MainComponent::mouseWheelMove (const juce::MouseEvent&, const juce::MouseWh
     repaint ();
 
     getProperties().set ("alpha", alpha);
+}
+
+bool MainComponent::keyPressed (const juce::KeyPress& key)
+{
+    if (key == juce::KeyPress ('v', juce::ModifierKeys::commandModifier, 0))
+    {
+        if (auto i = gin::SystemClipboard::getImageFromClipboard(); i.isValid())
+        {
+            image = i;
+            repaint();
+            setSize (image.getWidth() / scale, image.getHeight() / scale);
+            
+            getSettings().setValue ("file", juce::String());
+        }
+        return true;
+    }
+    
+    return juce::Component::keyPressed (key);
 }
 
 juce::PropertiesFile& MainComponent::getSettings()

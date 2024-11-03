@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="WUDCXZ" name="FloatingImage" projectType="guiapp" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" cppLanguageStandard="20">
   <MAINGROUP id="rJnt10" name="FloatingImage">
     <GROUP id="{B325DEF2-1293-D03D-559E-4A4D64FF8A30}" name="Assets">
       <FILE id="xeT8Cm" name="icon.png" compile="0" resource="1" file="Assets/icon.png"/>
@@ -14,11 +14,14 @@
     </GROUP>
   </MAINGROUP>
   <MODULES>
+    <MODULE id="gin" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="gin_gui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
@@ -33,6 +36,9 @@
         <MODULEPATH id="juce_events" path="modules/juce/modules"/>
         <MODULEPATH id="juce_graphics" path="modules/juce/modules"/>
         <MODULEPATH id="juce_gui_basics" path="modules/juce/modules"/>
+        <MODULEPATH id="gin_gui" path="modules/gin/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="modules/juce/modules"/>
+        <MODULEPATH id="gin" path="modules/gin/modules"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="xeT8Cm" bigIcon="xeT8Cm">
@@ -46,6 +52,9 @@
         <MODULEPATH id="juce_events" path="modules/juce/modules"/>
         <MODULEPATH id="juce_graphics" path="modules/juce/modules"/>
         <MODULEPATH id="juce_gui_basics" path="modules/juce/modules"/>
+        <MODULEPATH id="gin_gui" path="modules/gin/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="modules/juce/modules"/>
+        <MODULEPATH id="gin" path="modules/gin/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
