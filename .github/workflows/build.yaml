@@ -33,4 +33,4 @@ jobs:
         with:
           name: Binaries-${{ matrix.os }}
           path: ci/bin/*.*
-          retention-days: 30
+          retention-days: 3
